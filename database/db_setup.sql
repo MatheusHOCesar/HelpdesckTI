@@ -1,4 +1,10 @@
 CREATE DATABASE helpdesk_db;
+
+-- so a vm do backend tem acesso
+CREATE USER 'user_api'@'10.20.30.2' IDENTIFIED BY 'j1j2m3';
+GRANT ALL PRIVILEGES ON helpdesk_db.* TO 'api_user'@'10.20.30.2';
+FLUSH PRIVILEGES;
+
 USE helpdesk_db;
 
 CREATE TABLE usuarios (
@@ -16,3 +22,6 @@ CREATE TABLE chamados (
     usuario_id INT,
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
+
+INSERT INTO usuarios (nome, departamento) VALUES ('Mike', 'Engenharia'), ('Ana', 'RH');
+INSERT INTO chamados (titulo, descricao, usuario_id) VALUES ('Internet caindo', 'Cabo com mau contato', 1);

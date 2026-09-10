@@ -9,8 +9,8 @@ def get_db_connection():
         conn = mysql.connector.connect(
             host= '10.20.30.3',
             database= 'helpdesck_db',
-            user= 'api_user',
-            password= 'senhabanco123'
+            user= 'user_api',
+            password= 'j1j2m3'
         )
         return conn
     except Error as e:
