@@ -25,7 +25,7 @@ def listar_chamados():
 
     try:
         cursor = conn.cursor(dictionary= True)
-        cursor.execute("SELECT FROM chamados ORDER BY data_criacao DESC")
+        cursor.execute("SELECT * FROM chamados ORDER BY data_criacao DESC")
         chamados = cursor.fetchall()
         return jsonify(chamados), 200
     finally:
@@ -36,7 +36,7 @@ def listar_chamados():
 def abrir_chamado():
     dados = request.get_json()
     if not dados or not 'titulo' in dados or not 'descricao' in dados:
-        return jsonify({"erro": "Dados imcompletos"}), 400
+        return jsonify({"erro": "Dados incompletos"}), 400
 
     conn = get_db_connection()
     try:
@@ -45,6 +45,23 @@ def abrir_chamado():
         cursor.execute(query, (dados['titulo'], dados['descricao'], dados['usuario_id']))
         conn.commit()
         return jsonify({"mensagem": "Chamado aberto!"}), 201
+    finally:
+        cursor.close()
+        conn.close()
+
+@app.route('/api/chamados/<int:id>', methods=['PUT'])
+def atualizar_status(id):
+    dados = request.get_json()
+    if not dados or not 'status' in dados:
+        return jsonify({"erro": "Status nao fornecido"}), 400
+
+    conn = get_db_connection()
+    try:
+        cursor = conn.cursor()
+        query = "UPDATE chamados SET status = %s WHERE id = %s"
+        cursor.execute(query, (dados['status'], id))
+        conn.commit()
+        return jsonify({"mensagem": "Status atualizado!"}), 200
     finally:
         cursor.close()
         conn.close()
