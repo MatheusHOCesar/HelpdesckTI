@@ -47,11 +47,13 @@ Vagrant.configure("2") do |config|
       echo "[Unit]" > /etc/systemd/system/helpdesk.service
       echo "Description=API Helpdesk Flask" >> /etc/systemd/system/helpdesk.service
       echo "After=network.target" >> /etc/systemd/system/helpdesk.service
+      echo "RequiresMountsFor=/vagrant" >> /etc/systemd/system/helpdesk.service
       echo "[Service]" >> /etc/systemd/system/helpdesk.service
       echo "User=root" >> /etc/systemd/system/helpdesk.service
       echo "WorkingDirectory=/vagrant/backend" >> /etc/systemd/system/helpdesk.service
       echo "ExecStart=/usr/bin/python3 app.py" >> /etc/systemd/system/helpdesk.service
       echo "Restart=always" >> /etc/systemd/system/helpdesk.service
+      echo "RestartSec=5" >> /etc/systemd/system/helpdesk.service
       echo "[Install]" >> /etc/systemd/system/helpdesk.service
       echo "WantedBy=multi-user.target" >> /etc/systemd/system/helpdesk.service
 
