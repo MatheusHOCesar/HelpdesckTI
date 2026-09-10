@@ -2,7 +2,7 @@ CREATE DATABASE helpdesk_db;
 
 -- so a vm do backend tem acesso
 CREATE USER 'user_api'@'10.20.30.2' IDENTIFIED BY 'j1j2m3';
-GRANT ALL PRIVILEGES ON helpdesk_db.* TO 'api_user'@'10.20.30.2';
+GRANT ALL PRIVILEGES ON helpdesk_db.* TO 'user_api'@'10.20.30.2';
 FLUSH PRIVILEGES;
 
 USE helpdesk_db;

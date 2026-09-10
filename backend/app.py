@@ -8,7 +8,7 @@ def get_db_connection():
     try:
         conn = mysql.connector.connect(
             host= '10.20.30.3',
-            database= 'helpdesck_db',
+            database= 'helpdesk_db',
             user= 'user_api',
             password= 'j1j2m3'
         )
