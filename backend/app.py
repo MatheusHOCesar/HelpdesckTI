@@ -32,5 +32,22 @@ def listar_chamados():
         cursor.close()
         conn.close()
 
+@app.route('/api/chamados', methods=['POST'])
+def abrir_chamado():
+    dados = request.get_json()
+    if not dados or not 'titulo' in dados or not 'descricao' in dados:
+        return jsonify({"erro": "Dados imcompletos"}), 400
+
+    conn = get_db_connection()
+    try:
+        cursor = conn.cursor()
+        query = "INSERT INTO chamados (titulo, descricao, usuario_id) VALUES (%s, %s, %s)"
+        cursor.execute(query, (dados['titulo'], dados['descricao'], dados['usuario_id']))
+        conn.commit()
+        return jsonify({"mensagem": "Chamado aberto!"}), 201
+    finally:
+        cursor.close()
+        conn.close()
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
